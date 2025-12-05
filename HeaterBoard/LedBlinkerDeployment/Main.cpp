@@ -49,7 +49,7 @@ int main(void) {
     SystemClock_Config();
     
     // Initialize LED GPIO
-    BSP_LED_Init(LED_GREEN);
+    BSP_LED_Init(LED_RED);
     
     // Initialize F Prime Os layer
     Os::init();

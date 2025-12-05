@@ -8,7 +8,7 @@ STM32GpioDriver::STM32GpioDriver(const char* const compName) :
     STM32GpioDriverComponentBase(compName),
     m_gpio_port(nullptr),
     m_gpio_pin(0),
-    m_led_id(LED_GREEN)  // Default to green LED
+    m_led_id(LED_RED)  // Default to red LED (LD3)
 {
 }
 
