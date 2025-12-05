@@ -14,12 +14,12 @@ module LedBlinkerDeployment {
   #
 
   # ----------------------------------------------------------------------
-  # Defaults
+  # Defaults (Reduced for STM32 memory constraints)
   # ----------------------------------------------------------------------
 
   module Default {
-    constant QUEUE_SIZE = 10
-    constant STACK_SIZE = 64 * 1024
+    constant QUEUE_SIZE = 5
+    constant STACK_SIZE = 4 * 1024  # 4KB instead of 64KB
   }
 
   # ----------------------------------------------------------------------
@@ -35,6 +35,21 @@ module LedBlinkerDeployment {
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 39
+
+  instance cmdDisp: Svc.CommandDispatcher base id 0x10006000 \
+    queue size 10 \
+    stack size Default.STACK_SIZE \
+    priority 41
+
+  instance eventLogger: Svc.EventManager base id 0x10007000 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 42
+
+  instance tlmSend: Svc.TlmChan base id 0x10008000 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 44
 
 
   # ----------------------------------------------------------------------

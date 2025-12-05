@@ -10,31 +10,31 @@ module LedBlinkerDeployment {
 
   topology LedBlinkerDeployment {
     
-  # ----------------------------------------------------------------------
-  # Instances used in the topology
-  # ----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
+    # Instances used in the topology
+    # ----------------------------------------------------------------------
     instance rateGroup1
     instance rateGroupDriver
     instance systemResources
     instance osTime
     instance ledBlinker
     instance ledGpioDriver
+    instance cmdDisp
+    instance eventLogger
+    instance tlmSend
 
-  # ----------------------------------------------------------------------
-  # Pattern graph specifiers
-  # ----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
+    # Pattern graph specifiers
+    # ----------------------------------------------------------------------
 
     time connections instance osTime
+    command connections instance cmdDisp
+    event connections instance eventLogger
+    telemetry connections instance tlmSend
 
-  # ----------------------------------------------------------------------
-  # Telemetry packets (only used when TlmPacketizer is used)
-  # ----------------------------------------------------------------------
-
-    # include "LedBlinkerDeploymentPackets.fppi"
-
-  # ----------------------------------------------------------------------
-  # Direct graph specifiers
-  # ----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
+    # Direct graph specifiers
+    # ----------------------------------------------------------------------
 
     connections RateGroups {
       # Rate group driver driven by osTime

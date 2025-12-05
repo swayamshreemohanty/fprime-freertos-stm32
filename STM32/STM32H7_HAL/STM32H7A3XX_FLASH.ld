@@ -62,7 +62,7 @@ FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 2048K
 }
 
 /* Highest address of the user mode stack */
-_estack = ORIGIN(DTCMRAM) + LENGTH(DTCMRAM);    /* end of RAM */
+_estack = ORIGIN(RAM) + LENGTH(RAM);    /* end of RAM */
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size = 0x200;      /* required amount of heap  */
 _Min_Stack_Size = 0x400; /* required amount of stack */
@@ -163,7 +163,7 @@ SECTIONS
     *(.RamFunc*)       /* .RamFunc* sections */
 
     . = ALIGN(4);
-  } >DTCMRAM AT> FLASH
+  } >RAM AT> FLASH
 
  /* Initialized TLS data section */
   .tdata : ALIGN(4)
@@ -221,7 +221,7 @@ SECTIONS
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
       PROVIDE( __bss_end = .);
-  } >DTCMRAM
+  } >RAM
   PROVIDE( __non_tls_bss_start = ADDR(.bss) );
 
   PROVIDE( __bss_start = __tbss_start );

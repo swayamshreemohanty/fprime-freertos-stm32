@@ -25,6 +25,8 @@ include("${CMAKE_CURRENT_LIST_DIR}/lib/fprime-freertos/library.cmake")
 
 # Add STM32 drivers first (needed by deployments)
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/STM32/STM32GpioDriver")
+# TODO: Add STM32UartDriver once communication topology is complete
+# add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/STM32/STM32UartDriver")
 
 # This includes project-wide objects
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/HeaterBoard")

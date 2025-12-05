@@ -3,17 +3,14 @@ module Drv {
   passive component STM32UartDriver {
 
     # ----------------------------------------------------------------------
-    # Ports for byte stream driver model
+    # Import byte stream driver interface
     # ----------------------------------------------------------------------
 
-    @ Port for sending data
-    sync input port send: Drv.ByteStreamSend
+    import Drv.ByteStreamDriver
 
-    @ Port for receiving ready notification  
-    output port ready: Drv.ByteStreamReady
-
-    @ Port for receiving data callbacks
-    output port recv: Drv.ByteStreamRecv
+    # ----------------------------------------------------------------------
+    # Additional ports for buffer management
+    # ----------------------------------------------------------------------
 
     @ Port for allocation of buffers to receive data
     output port allocate: Fw.BufferGet
@@ -21,8 +18,8 @@ module Drv {
     @ Port for deallocation of buffers from received data
     output port deallocate: Fw.BufferSend
 
-    @ Port to poll for received data
-    sync input port poll: Drv.ByteStreamPoll
+    @ Port to poll for received data (called from rate group)
+    sync input port poll: Svc.Sched
 
   }
 }
