@@ -27,8 +27,8 @@ LedBlinker::~LedBlinker() {}
 // ----------------------------------------------------------------------
 
 void LedBlinker::schedIn_handler(
-    const NATIVE_INT_TYPE portNum,
-    NATIVE_UINT_TYPE context
+    const FwIndexType portNum,
+    U32 context
 ) {
     m_cycleCount++;
 

@@ -10,10 +10,10 @@ telemetry packets LedBlinkerDeploymentPackets {
     FileHandling.fileDownlink.PacketsSent
     FileHandling.fileManager.CommandsExecuted
 
-    To test the LED blink on the stm32.cmdSeq.CS_LoadCommands
-    To test the LED blink on the stm32.cmdSeq.CS_CancelCommands
-    To test the LED blink on the stm32.cmdSeq.CS_CommandsExecuted
-    To test the LED blink on the stm32.cmdSeq.CS_SequencesCompleted
+    LedBlinkerDeployment.cmdSeq.CS_LoadCommands
+    LedBlinkerDeployment.cmdSeq.CS_CancelCommands
+    LedBlinkerDeployment.cmdSeq.CS_CommandsExecuted
+    LedBlinkerDeployment.cmdSeq.CS_SequencesCompleted
     ComCcsds.comQueue.comQueueDepth
     ComCcsds.comQueue.buffQueueDepth
     ComCcsds.commsBufferManager.TotalBuffs
@@ -21,9 +21,9 @@ telemetry packets LedBlinkerDeploymentPackets {
     ComCcsds.commsBufferManager.HiBuffs
     #ComCcsds.tlmSend.SendLevel
 
-    To test the LED blink on the stm32.rateGroup1.RgMaxTime
-    To test the LED blink on the stm32.rateGroup2.RgMaxTime
-    To test the LED blink on the stm32.rateGroup3.RgMaxTime
+    LedBlinkerDeployment.rateGroup1.RgMaxTime
+    LedBlinkerDeployment.rateGroup2.RgMaxTime
+    LedBlinkerDeployment.rateGroup3.RgMaxTime
   }
 
   packet CDHErrors id 2 group 1 {
@@ -33,40 +33,40 @@ telemetry packets LedBlinkerDeploymentPackets {
     FileHandling.fileDownlink.Warnings
     FileHandling.fileManager.Errors
 
-    To test the LED blink on the stm32.cmdSeq.CS_Errors
+    LedBlinkerDeployment.cmdSeq.CS_Errors
     ComCcsds.commsBufferManager.NoBuffs
     ComCcsds.commsBufferManager.EmptyBuffs
 
-    To test the LED blink on the stm32.rateGroup1.RgCycleSlips
-    To test the LED blink on the stm32.rateGroup2.RgCycleSlips
-    To test the LED blink on the stm32.rateGroup3.RgCycleSlips
+    LedBlinkerDeployment.rateGroup1.RgCycleSlips
+    LedBlinkerDeployment.rateGroup2.RgCycleSlips
+    LedBlinkerDeployment.rateGroup3.RgCycleSlips
   }
 
   packet SystemRes1 id 5 group 2 {
-    To test the LED blink on the stm32.systemResources.MEMORY_TOTAL
-    To test the LED blink on the stm32.systemResources.MEMORY_USED
-    To test the LED blink on the stm32.systemResources.NON_VOLATILE_TOTAL
-    To test the LED blink on the stm32.systemResources.NON_VOLATILE_FREE
+    LedBlinkerDeployment.systemResources.MEMORY_TOTAL
+    LedBlinkerDeployment.systemResources.MEMORY_USED
+    LedBlinkerDeployment.systemResources.NON_VOLATILE_TOTAL
+    LedBlinkerDeployment.systemResources.NON_VOLATILE_FREE
   }
 
   packet SystemRes3 id 6 group 2 {
-    To test the LED blink on the stm32.systemResources.CPU
-    To test the LED blink on the stm32.systemResources.CPU_00
-    To test the LED blink on the stm32.systemResources.CPU_01
-    To test the LED blink on the stm32.systemResources.CPU_02
-    To test the LED blink on the stm32.systemResources.CPU_03
-    To test the LED blink on the stm32.systemResources.CPU_04
-    To test the LED blink on the stm32.systemResources.CPU_05
-    To test the LED blink on the stm32.systemResources.CPU_06
-    To test the LED blink on the stm32.systemResources.CPU_07
-    To test the LED blink on the stm32.systemResources.CPU_08
-    To test the LED blink on the stm32.systemResources.CPU_09
-    To test the LED blink on the stm32.systemResources.CPU_10
-    To test the LED blink on the stm32.systemResources.CPU_11
-    To test the LED blink on the stm32.systemResources.CPU_12
-    To test the LED blink on the stm32.systemResources.CPU_13
-    To test the LED blink on the stm32.systemResources.CPU_14
-    To test the LED blink on the stm32.systemResources.CPU_15
+    LedBlinkerDeployment.systemResources.CPU
+    LedBlinkerDeployment.systemResources.CPU_00
+    LedBlinkerDeployment.systemResources.CPU_01
+    LedBlinkerDeployment.systemResources.CPU_02
+    LedBlinkerDeployment.systemResources.CPU_03
+    LedBlinkerDeployment.systemResources.CPU_04
+    LedBlinkerDeployment.systemResources.CPU_05
+    LedBlinkerDeployment.systemResources.CPU_06
+    LedBlinkerDeployment.systemResources.CPU_07
+    LedBlinkerDeployment.systemResources.CPU_08
+    LedBlinkerDeployment.systemResources.CPU_09
+    LedBlinkerDeployment.systemResources.CPU_10
+    LedBlinkerDeployment.systemResources.CPU_11
+    LedBlinkerDeployment.systemResources.CPU_12
+    LedBlinkerDeployment.systemResources.CPU_13
+    LedBlinkerDeployment.systemResources.CPU_14
+    LedBlinkerDeployment.systemResources.CPU_15
   }
 
   packet DataProducts id 21 group 3 {

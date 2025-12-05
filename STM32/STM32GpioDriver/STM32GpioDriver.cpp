@@ -12,11 +12,11 @@ STM32GpioDriver::STM32GpioDriver(const char* const compName) :
 {
 }
 
-void STM32GpioDriver::init(const NATIVE_INT_TYPE instance) {
+void STM32GpioDriver::init(const FwEnumStoreType instance) {
     STM32GpioDriverComponentBase::init(instance);
 }
 
-bool STM32GpioDriver::open(GPIO_TypeDef* port, uint16_t pin, GpioDirection direction) {
+bool STM32GpioDriver::open(GPIO_TypeDef* port, uint16_t pin) {
     m_gpio_port = port;
     m_gpio_pin = pin;
 
@@ -31,31 +31,31 @@ bool STM32GpioDriver::open(GPIO_TypeDef* port, uint16_t pin, GpioDirection direc
     }
 
     // Initialize the LED
-    BSP_LED_Init(m_led_id);
+    BSP_LED_Init(static_cast<Led_TypeDef>(m_led_id));
 
     return true;
 }
 
 Drv::GpioStatus STM32GpioDriver::gpioRead_handler(
-    const NATIVE_INT_TYPE portNum,
+    const FwIndexType portNum,
     Fw::Logic &state
 ) {
     // Read LED state (on/off)
-    uint32_t led_state = BSP_LED_GetState(m_led_id);
+    uint32_t led_state = BSP_LED_GetState(static_cast<Led_TypeDef>(m_led_id));
     state = (led_state == 1) ? Fw::Logic::HIGH : Fw::Logic::LOW;
 
     return Drv::GpioStatus::OP_OK;
 }
 
 Drv::GpioStatus STM32GpioDriver::gpioWrite_handler(
-    const NATIVE_INT_TYPE portNum,
+    const FwIndexType portNum,
     const Fw::Logic& state
 ) {
     // Control LED using BSP functions
     if (state == Fw::Logic::HIGH) {
-        BSP_LED_On(m_led_id);
+        BSP_LED_On(static_cast<Led_TypeDef>(m_led_id));
     } else {
-        BSP_LED_Off(m_led_id);
+        BSP_LED_Off(static_cast<Led_TypeDef>(m_led_id));
     }
 
     return Drv::GpioStatus::OP_OK;

@@ -32,8 +32,8 @@ class LedBlinker final : public LedBlinkerComponentBase {
 
     //! Handler for schedIn port
     void schedIn_handler(
-        const NATIVE_INT_TYPE portNum,  //!< The port number
-        NATIVE_UINT_TYPE context        //!< The call order
+        const FwIndexType portNum,  //!< The port number
+        U32 context                 //!< The call order
     ) override;
 
     // ----------------------------------------------------------------------

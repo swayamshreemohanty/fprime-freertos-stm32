@@ -16,4 +16,6 @@ register_fprime_module(
         "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
     SOURCES
         "${CMAKE_CURRENT_LIST_DIR}/LedBlinkerDeploymentTopology.cpp"
+    DEPENDS
+        Fw_Logger
 )

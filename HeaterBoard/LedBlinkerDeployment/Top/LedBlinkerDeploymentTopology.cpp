@@ -4,16 +4,16 @@
 //
 // ======================================================================
 // Provides access to autocoded functions
-#include <LedBlinkerDeployment/Top/LedBlinkerDeploymentTopologyAc.hpp>
+#include <HeaterBoard/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopologyAc.hpp>
 // Note: Uncomment when using Svc:TlmPacketizer
-//#include <LedBlinkerDeployment/Top/LedBlinkerDeploymentPacketsAc.hpp>
+//#include <HeaterBoard/LedBlinkerDeployment/Top/LedBlinkerDeploymentPacketsAc.hpp>
 
 // Necessary project-specified types
 #include <Fw/Types/MallocAllocator.hpp>
 
-// Public functions for use in main program are namespaced with deployment module To test the LED blink on the stm32
+// Public functions for use in main program are namespaced with deployment module LedBlinkerDeployment
 // This is also the namespace where the topology components are instantiated by FPP.
-namespace To test the LED blink on the stm32 {
+namespace LedBlinkerDeployment {
 
 // Instantiate a malloc allocator for cmdSeq buffer allocation
 Fw::MallocAllocator mallocator;
@@ -106,4 +106,4 @@ void teardownTopology(const TopologyState& state) {
 
     tearDownComponents(state);
 }
-};  // namespace To test the LED blink on the stm32
+};  // namespace LedBlinkerDeployment

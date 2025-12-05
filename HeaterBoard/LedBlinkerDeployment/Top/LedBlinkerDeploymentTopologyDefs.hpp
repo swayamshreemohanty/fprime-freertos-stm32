@@ -23,7 +23,7 @@
 #include "Svc/Subtopologies/ComCcsds/Ports_ComBufferQueueEnumAc.hpp"
 
 // Include autocoded FPP constants
-#include "LedBlinkerDeployment/Top/FppConstantsAc.hpp"
+#include "HeaterBoard/LedBlinkerDeployment/Top/FppConstantsAc.hpp"
 
 /**
  * \brief required ping constants
@@ -45,19 +45,19 @@
  * ```
  */
 namespace PingEntries {
-    namespace To test the LED blink on the stm32_rateGroup1 {enum { WARN = 3, FATAL = 5 };}
-    namespace To test the LED blink on the stm32_rateGroup2 {enum { WARN = 3, FATAL = 5 };}
-    namespace To test the LED blink on the stm32_rateGroup3 {enum { WARN = 3, FATAL = 5 };}
-    namespace To test the LED blink on the stm32_cmdSeq {enum { WARN = 3, FATAL = 5 };}
+    namespace LedBlinkerDeployment_rateGroup1 {enum { WARN = 3, FATAL = 5 };}
+    namespace LedBlinkerDeployment_rateGroup2 {enum { WARN = 3, FATAL = 5 };}
+    namespace LedBlinkerDeployment_rateGroup3 {enum { WARN = 3, FATAL = 5 };}
+    namespace LedBlinkerDeployment_cmdSeq {enum { WARN = 3, FATAL = 5 };}
 }  // namespace PingEntries
 
 // Definitions are placed within the same namespace as the FPP module that contains the topology.
-namespace To test the LED blink on the stm32 {
+namespace LedBlinkerDeployment {
 
 /**
  * \brief required type definition to carry state
  *
- * The topology autocoder requires an object that carries state with the name `To test the LED blink on the stm32::TopologyState`. Only the type
+ * The topology autocoder requires an object that carries state with the name `LedBlinkerDeployment::TopologyState`. Only the type
  * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The
  * contents are entirely up to the definition of the project. This deployment uses subtopologies.
  */
@@ -71,6 +71,6 @@ struct TopologyState {
 };
 
 namespace PingEntries = ::PingEntries;
-}  // namespace To test the LED blink on the stm32
+}  // namespace LedBlinkerDeployment
 
 #endif
