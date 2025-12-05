@@ -7,7 +7,7 @@ module HeaterBoard {
         # ----------------------------------------------------------------------
 
         @ Rate group input - called periodically
-        sync input port schedIn: Svc.Sched
+        async input port schedIn: Svc.Sched
 
         @ GPIO write output
         output port gpioWrite: Drv.GpioWrite
@@ -38,6 +38,21 @@ module HeaterBoard {
         ###############################################################################
         @ Port for requesting the current time
         time get port timeCaller
+
+        @ Port for receiving commands
+        command recv port cmdIn
+
+        @ Port for sending command responses
+        command resp port cmdResponseOut
+
+        @ Port for sending textual representation of events
+        text event port logTextOut
+
+        @ Port for sending events to downlink
+        event port logOut
+
+        @ Port for sending telemetry channels to downlink
+        telemetry port tlmOut
 
         @ Port to return the value of a parameter
         param get port prmGetOut

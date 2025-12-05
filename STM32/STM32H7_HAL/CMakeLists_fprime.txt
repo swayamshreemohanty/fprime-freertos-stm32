@@ -7,6 +7,12 @@ file(GLOB HAL_SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/*.c
 )
 
+# Remove problematic DMA files (not needed for LED blinker)
+list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_dma.*")
+list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_dma2d.*")
+list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_bdma.*")
+list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_mdma.*")
+
 # Collect Core sources
 file(GLOB CORE_SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/Core/Src/*.c
@@ -53,6 +59,13 @@ target_include_directories(stm32h7_hal PUBLIC
 target_compile_definitions(stm32h7_hal PUBLIC
   USE_HAL_DRIVER
   STM32H7A3XXQ
+)
+
+# Compiler options - ensure C99 standard for proper type definitions
+target_compile_options(stm32h7_hal PRIVATE
+  -std=gnu11
+  -Wno-unused-parameter
+  -Wno-unused-variable
 )
 
 # Set language for assembly files

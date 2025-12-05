@@ -21,6 +21,16 @@ register_fprime_deployment(
         "${CMAKE_CURRENT_LIST_DIR}/Main.cpp"
     DEPENDS
         ${FPRIME_CURRENT_MODULE}_Top
+    CHOOSES_IMPLEMENTATIONS
+        Fw_StringFormat_snprintf
+        Os_Console_Stub
+        Os_File_Stub
+        Os_Task_Stub
+        Os_Mutex_Stub
+        Os_Queue_Stub
+        Os_Cpu_Stub
+        Os_Memory_Stub
+        Os_RawTime_Stub
 )
 
 # Link STM32 HAL library when cross-compiling

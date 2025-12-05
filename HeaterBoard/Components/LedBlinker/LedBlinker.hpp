@@ -8,6 +8,7 @@
 #define HeaterBoard_LedBlinker_HPP
 
 #include "HeaterBoard/Components/LedBlinker/LedBlinkerComponentAc.hpp"
+#include <Fw/Types/BasicTypes.hpp>
 
 namespace HeaterBoard {
 

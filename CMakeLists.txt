@@ -20,10 +20,8 @@ endif()
 # NOTE: register custom targets between these two lines
 fprime_setup_included_code()
 
+# Add STM32 drivers first (needed by deployments)
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/STM32/STM32GpioDriver")
 
 # This includes project-wide objects
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/HeaterBoard")
-
-# Add STM32 drivers
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/STM32/STM32GpioDriver")
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/LedBlinkerDeployment/")

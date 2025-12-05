@@ -1,7 +1,7 @@
 #ifndef DRV_STM32GPIODRIVER_HPP
 #define DRV_STM32GPIODRIVER_HPP
 
-#include <Drv/STM32GpioDriver/STM32GpioDriverComponentAc.hpp>
+#include <STM32/STM32GpioDriver/STM32GpioDriverComponentAc.hpp>
 
 // Forward declaration for STM32 HAL types
 typedef struct GPIO_TypeDef GPIO_TypeDef;
