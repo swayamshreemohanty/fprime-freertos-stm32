@@ -1,12 +1,14 @@
 #include <STM32/STM32GpioDriver/STM32GpioDriver.hpp>
 #include "stm32h7xx_hal.h"
+#include "stm32h7xx_nucleo.h"  // BSP for LED control
 
 namespace Drv {
 
 STM32GpioDriver::STM32GpioDriver(const char* const compName) :
     STM32GpioDriverComponentBase(compName),
     m_gpio_port(nullptr),
-    m_gpio_pin(0)
+    m_gpio_pin(0),
+    m_led_id(LED_GREEN)  // Default to green LED
 {
 }
 
@@ -18,8 +20,18 @@ bool STM32GpioDriver::open(GPIO_TypeDef* port, uint16_t pin, GpioDirection direc
     m_gpio_port = port;
     m_gpio_pin = pin;
 
-    // GPIO is already initialized by STM32CubeMX MX_GPIO_Init()
-    // You can add runtime configuration here if needed
+    // Map GPIO pin to LED ID for Nucleo board
+    // You can extend this for other pins
+    if (port == GPIOB && pin == GPIO_PIN_0) {
+        m_led_id = LED_GREEN;
+    } else if (port == GPIOB && pin == GPIO_PIN_14) {
+        m_led_id = LED_YELLOW;
+    } else if (port == GPIOE && pin == GPIO_PIN_1) {
+        m_led_id = LED_RED;
+    }
+
+    // Initialize the LED
+    BSP_LED_Init(m_led_id);
 
     return true;
 }
@@ -28,12 +40,9 @@ Drv::GpioStatus STM32GpioDriver::gpioRead_handler(
     const NATIVE_INT_TYPE portNum,
     Fw::Logic &state
 ) {
-    if (m_gpio_port == nullptr) {
-        return Drv::GpioStatus::OP_ERROR;
-    }
-
-    GPIO_PinState pinState = HAL_GPIO_ReadPin(m_gpio_port, m_gpio_pin);
-    state = (pinState == GPIO_PIN_SET) ? Fw::Logic::HIGH : Fw::Logic::LOW;
+    // Read LED state (on/off)
+    uint32_t led_state = BSP_LED_GetState(m_led_id);
+    state = (led_state == 1) ? Fw::Logic::HIGH : Fw::Logic::LOW;
 
     return Drv::GpioStatus::OP_OK;
 }
@@ -42,12 +51,12 @@ Drv::GpioStatus STM32GpioDriver::gpioWrite_handler(
     const NATIVE_INT_TYPE portNum,
     const Fw::Logic& state
 ) {
-    if (m_gpio_port == nullptr) {
-        return Drv::GpioStatus::OP_ERROR;
+    // Control LED using BSP functions
+    if (state == Fw::Logic::HIGH) {
+        BSP_LED_On(m_led_id);
+    } else {
+        BSP_LED_Off(m_led_id);
     }
-
-    GPIO_PinState pinState = (state == Fw::Logic::HIGH) ? GPIO_PIN_SET : GPIO_PIN_RESET;
-    HAL_GPIO_WritePin(m_gpio_port, m_gpio_pin, pinState);
 
     return Drv::GpioStatus::OP_OK;
 }

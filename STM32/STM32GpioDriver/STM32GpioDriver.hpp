@@ -37,6 +37,7 @@ private:
     // Member variables
     GPIO_TypeDef* m_gpio_port;
     uint16_t m_gpio_pin;
+    uint32_t m_led_id;  // BSP LED ID (LED_GREEN, LED_YELLOW, LED_RED)
 };
 
 } // namespace Drv
