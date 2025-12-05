@@ -17,7 +17,7 @@ module HeaterBoard {
         # ----------------------------------------------------------------------
 
         @ Blink interval in rate group ticks
-        param BLINK_INTERVAL: U32 default 2
+        param BLINK_INTERVAL: U32 default 1
 
         # ----------------------------------------------------------------------
         # Commands
