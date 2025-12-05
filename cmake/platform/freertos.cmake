@@ -11,6 +11,9 @@ set(FPRIME_USE_POSIX OFF CACHE BOOL "Use POSIX" FORCE)
 # Use FPrime Types for FreeRTOS
 include_directories(SYSTEM "${FPRIME_FRAMEWORK_PATH}/Fw/Types/Linux")
 
+# Add platform directory containing PlatformTypes.fpp for FPP type definitions
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Platform/")
+
 # No baremetal scheduler (we're using FreeRTOS tasks)
 set(FPRIME_USE_BAREMETAL_SCHEDULER OFF CACHE BOOL "Use baremetal scheduler" FORCE)
 

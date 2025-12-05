@@ -45,6 +45,9 @@ module HeaterBoard {
         @ Port for sending command responses
         command resp port cmdResponseOut
 
+        @ Port for sending command registration messages
+        command reg port cmdRegOut
+
         @ Port for sending textual representation of events
         text event port logTextOut
 
