@@ -26,15 +26,22 @@ class LedBlinker final : public LedBlinkerComponentBase {
 
   private:
     // ----------------------------------------------------------------------
-    // Handler implementations for commands
+    // Handler implementations
     // ----------------------------------------------------------------------
 
-    //! Handler implementation for command TODO
-    //!
-    //! TODO
-    void TODO_cmdHandler(FwOpcodeType opCode,  //!< The opcode
-                         U32 cmdSeq            //!< The command sequence number
-                         ) override;
+    //! Handler for schedIn port
+    void schedIn_handler(
+        const NATIVE_INT_TYPE portNum,  //!< The port number
+        NATIVE_UINT_TYPE context        //!< The call order
+    ) override;
+
+    // ----------------------------------------------------------------------
+    // Member variables
+    // ----------------------------------------------------------------------
+
+    U32 m_blinkCount;   //!< Number of blinks
+    bool m_ledState;    //!< Current LED state
+    U32 m_cycleCount;   //!< Cycle counter for blink interval
 };
 
 }  // namespace HeaterBoard

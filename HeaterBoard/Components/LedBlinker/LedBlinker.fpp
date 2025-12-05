@@ -2,44 +2,42 @@ module HeaterBoard {
     @ Blink led on the stm32 board
     active component LedBlinker {
 
-        # One async command/port is required for active components
-        # This should be overridden by the developers with a useful command/port
-        @ TODO
-        async command TODO opcode 0
+        # ----------------------------------------------------------------------
+        # Ports
+        # ----------------------------------------------------------------------
 
-        ##############################################################################
-        #### Uncomment the following examples to start customizing your component ####
-        ##############################################################################
+        @ Rate group input - called periodically
+        sync input port schedIn: Svc.Sched
 
-        # @ Example async command
-        # async command COMMAND_NAME(param_name: U32)
+        @ GPIO write output
+        output port gpioWrite: Drv.GpioWrite
 
-        # @ Example telemetry counter
-        # telemetry ExampleCounter: U64
+        # ----------------------------------------------------------------------
+        # Parameters
+        # ----------------------------------------------------------------------
 
-        # @ Example event
-        # event ExampleStateEvent(example_state: Fw.On) severity activity high id 0 format "State set to {}"
+        @ Blink interval in rate group ticks
+        param BLINK_INTERVAL: U32 default 10
 
-        # @ Example port: receiving calls from the rate group
-        # sync input port run: Svc.Sched
+        # ----------------------------------------------------------------------
+        # Events
+        # ----------------------------------------------------------------------
 
-        # @ Example parameter
-        # param PARAMETER_NAME: U32
+        @ LED state changed
+        event LED_STATE($state: Fw.On) severity activity low format "LED state changed to {}"
+
+        # ----------------------------------------------------------------------
+        # Telemetry
+        # ----------------------------------------------------------------------
+
+        @ Number of blinks
+        telemetry BLINK_COUNT: U32
 
         ###############################################################################
         # Standard AC Ports: Required for Channels, Events, Commands, and Parameters  #
         ###############################################################################
         @ Port for requesting the current time
         time get port timeCaller
-
-        @ Enables command handling
-        import Fw.Command
-
-        @ Enables event handling
-        import Fw.Event
-
-        @ Enables telemetry channels handling
-        import Fw.Channel
 
         @ Port to return the value of a parameter
         param get port prmGetOut
