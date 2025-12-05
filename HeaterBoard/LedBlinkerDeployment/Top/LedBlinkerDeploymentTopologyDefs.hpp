@@ -6,22 +6,6 @@
 #ifndef LEDBLINKERDEPLOYMENT_LEDBLINKERDEPLOYMENTTOPOLOGYDEFS_HPP
 #define LEDBLINKERDEPLOYMENT_LEDBLINKERDEPLOYMENTTOPOLOGYDEFS_HPP
 
-// Subtopology PingEntries includes
-#include "Svc/Subtopologies/CdhCore/PingEntries.hpp"
-#include "Svc/Subtopologies/ComCcsds/PingEntries.hpp"
-#include "Svc/Subtopologies/DataProducts/PingEntries.hpp"
-#include "Svc/Subtopologies/FileHandling/PingEntries.hpp"
-
-// SubtopologyTopologyDefs includes
-#include "Svc/Subtopologies/CdhCore/SubtopologyTopologyDefs.hpp"
-#include "Svc/Subtopologies/ComCcsds/SubtopologyTopologyDefs.hpp"
-#include "Svc/Subtopologies/DataProducts/SubtopologyTopologyDefs.hpp"
-#include "Svc/Subtopologies/FileHandling/SubtopologyTopologyDefs.hpp"
-
-//ComCcsds Enum Includes
-#include "Svc/Subtopologies/ComCcsds/Ports_ComPacketQueueEnumAc.hpp"
-#include "Svc/Subtopologies/ComCcsds/Ports_ComBufferQueueEnumAc.hpp"
-
 // Include autocoded FPP constants
 #include "HeaterBoard/LedBlinkerDeployment/Top/FppConstantsAc.hpp"
 
@@ -46,9 +30,6 @@
  */
 namespace PingEntries {
     namespace LedBlinkerDeployment_rateGroup1 {enum { WARN = 3, FATAL = 5 };}
-    namespace LedBlinkerDeployment_rateGroup2 {enum { WARN = 3, FATAL = 5 };}
-    namespace LedBlinkerDeployment_rateGroup3 {enum { WARN = 3, FATAL = 5 };}
-    namespace LedBlinkerDeployment_cmdSeq {enum { WARN = 3, FATAL = 5 };}
 }  // namespace PingEntries
 
 // Definitions are placed within the same namespace as the FPP module that contains the topology.
@@ -59,15 +40,10 @@ namespace LedBlinkerDeployment {
  *
  * The topology autocoder requires an object that carries state with the name `LedBlinkerDeployment::TopologyState`. Only the type
  * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The
- * contents are entirely up to the definition of the project. This deployment uses subtopologies.
+ * contents are entirely up to the definition of the project. This is a minimal embedded deployment.
  */
 struct TopologyState {
-    const char* uartDevice; //!< UART device path for communication
-    U32 baudRate;          //!< Baud rate for UART communication
-    CdhCore::SubtopologyState cdhCore;           //!< Subtopology state for CdhCore
-    ComCcsds::SubtopologyState comCcsds;         //!< Subtopology state for ComCcsds 
-    DataProducts::SubtopologyState dataProducts; //!< Subtopology state for DataProducts
-    FileHandling::SubtopologyState fileHandling; //!< Subtopology state for FileHandling
+    // Empty for this minimal deployment
 };
 
 namespace PingEntries = ::PingEntries;

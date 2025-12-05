@@ -58,23 +58,17 @@ void setupTopology(const TopologyState& state);
 void teardownTopology(const TopologyState& state);
 
 /**
- * \brief cycle the rate group driver at a crude rate
+ * \brief start rate group cycling (placeholder for embedded)
  *
- * The reference topology does not have a true 1Hz input clock for the rate group driver because it is designed to
- * operate across various computing endpoints (e.g. laptops) where a clear 1Hz source may not be easily and generically
- * achieved. This function mimics the cycling via a Task::delay(milliseconds) loop that manually invokes the ISR call
- * to the example block driver.
- *
- *
- * This loop is stopped via a stopRateGroups call.
- *
+ * For embedded FreeRTOS deployments, the rate group driver is called directly
+ * from a FreeRTOS task. This function is a placeholder for compatibility.
  */
-void startRateGroups(const Fw::TimeInterval& interval = Fw::TimeInterval(1,0));
+void startRateGroups();
 
 /**
- * \brief stop the rate groups 
+ * \brief stop the rate groups (placeholder for embedded)
  *
- * This stops the cycle started by startRateGroups.
+ * This is a placeholder for compatibility with the topology interface.
  */
 void stopRateGroups();
 

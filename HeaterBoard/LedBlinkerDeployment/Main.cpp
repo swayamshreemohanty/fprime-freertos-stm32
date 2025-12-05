@@ -1,94 +1,91 @@
 // ======================================================================
 // \title  Main.cpp
-// \brief main program for the F' application. Intended for CLI-based systems (Linux, macOS)
+// \brief main program for the F' STM32 LED Blinker application
 //
 // ======================================================================
 // Used to access topology functions
 #include <HeaterBoard/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopology.hpp>
+#include <HeaterBoard/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopologyAc.hpp>
+// STM32 HAL and BSP
+#include "stm32h7xx_hal.h"
+#include "stm32h7xx_nucleo.h"
 // OSAL initialization
 #include <Os/Os.hpp>
-// Used for signal handling shutdown
-#include <signal.h>
-// Used for command line argument processing
-#include <getopt.h>
-// Used for printf functions
-#include <cstdlib>
+// FreeRTOS
+#include "FreeRTOS.h"
+#include "task.h"
 
-/**
- * \brief print command line help message
- *
- * This will print a command line help message including the available command line arguments.
- *
- * @param app: name of application
- */
-void print_usage(const char* app) {
-    (void)printf("Usage: ./%s [options]\n-b\tBaud rate\n-d\tUART Device\n", app);
+extern "C" {
+    void SystemClock_Config(void);
+    void Error_Handler(void);
 }
 
 /**
- * \brief shutdown topology cycling on signal
- *
- * The reference topology allows for a simulated cycling of the rate groups. This simulated cycling needs to be stopped
- * in order for the program to shutdown. This is done via handling signals such that it is performed via Ctrl-C
- *
- * @param signum
+ * \brief Rate group task for LED blinker
  */
-static void signalHandler(int signum) {
-    LedBlinkerDeployment::stopRateGroups();
-}
-
-/**
- * \brief execute the program
- *
- * This F´ program is designed to run in standard environments (e.g. Linux/macOs running on a laptop). Thus it uses
- * command line inputs to specify how to connect.
- *
- * @param argc: argument count supplied to program
- * @param argv: argument values supplied to program
- * @return: 0 on success, something else on failure
- */
-int main(int argc, char* argv[]) {
-    I32 option = 0;
-    CHAR* uart_device = nullptr;
-    U32 baud_rate = 0;
-
-    Os::init();
-
-    // Loop while reading the getopt supplied options
-    while ((option = getopt(argc, argv, "hb:d:")) != -1) {
-        switch (option) {
-            // Handle the -b baud rate argument
-            case 'b':
-                baud_rate = static_cast<U32>(atoi(optarg));
-                break;
-            // Handle the -d device argument
-            case 'd':
-                uart_device = optarg;
-                break;
-            // Cascade intended: help output
-            case 'h':
-            // Cascade intended: help output
-            case '?':
-            // Default case: output help and exit
-            default:
-                print_usage(argv[0]);
-                return (option == 'h') ? 0 : 1;
-        }
+void rateGroupTask(void *pvParameters) {
+    // Drive rate group at 1Hz
+    U32 counter = 0;
+    while (1) {
+        // Cycle the rate group driver
+        Os::RawTime cycleStart;
+        cycleStart.now();
+        LedBlinkerDeployment::rateGroupDriver.get_CycleIn_InputPort(0)->invoke(cycleStart);
+        
+        // Wait for 1 second
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        counter++;
     }
-    // Object for communicating state to the topology
-    LedBlinkerDeployment::TopologyState inputs;
-    inputs.uartDevice = uart_device;
-    inputs.baudRate = baud_rate;
+}
 
-    // Setup program shutdown via Ctrl-C
-    signal(SIGINT, signalHandler);
-    signal(SIGTERM, signalHandler);
-    (void)printf("Hit Ctrl-C to quit\n");
-
-    // Setup, cycle, and teardown topology
-    LedBlinkerDeployment::setupTopology(inputs);
-    LedBlinkerDeployment::startRateGroups(Fw::TimeInterval(1,0));  // Program loop cycling rate groups at 1Hz
-    LedBlinkerDeployment::teardownTopology(inputs);
-    (void)printf("Exiting...\n");
+/**
+ * \brief main entry point for STM32
+ */
+int main(void) {
+    // Initialize STM32 HAL
+    HAL_Init();
+    
+    // Configure system clock
+    SystemClock_Config();
+    
+    // Initialize LED GPIO
+    BSP_LED_Init(LED_GREEN);
+    
+    // Initialize F Prime Os layer
+    Os::init();
+    
+    // Object for communicating state to the topology (empty for this deployment)
+    LedBlinkerDeployment::TopologyState state;
+    
+    // Setup topology
+    LedBlinkerDeployment::setupTopology(state);
+    
+    // Create rate group task
+    xTaskCreate(rateGroupTask, "RateGroup", configMINIMAL_STACK_SIZE * 4, NULL, tskIDLE_PRIORITY + 1, NULL);
+    
+    // Start FreeRTOS scheduler
+    vTaskStartScheduler();
+    
+    // Should never reach here
+    while (1) {
+        Error_Handler();
+    }
+    
     return 0;
+}
+
+// System Clock Configuration (from STM32CubeMX)
+extern "C" void SystemClock_Config(void) {
+    // This function should be implemented based on your STM32 HAL project
+    // For now, using default configuration
+}
+
+// Error Handler
+extern "C" void Error_Handler(void) {
+    __disable_irq();
+    while (1) {
+        // Blink LED to indicate error
+        BSP_LED_Toggle(LED_GREEN);
+        HAL_Delay(100);
+    }
 }
