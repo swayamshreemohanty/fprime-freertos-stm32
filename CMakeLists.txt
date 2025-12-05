@@ -20,6 +20,9 @@ endif()
 # NOTE: register custom targets between these two lines
 fprime_setup_included_code()
 
+# Include FreeRTOS OS layer for F Prime
+include("${CMAKE_CURRENT_LIST_DIR}/lib/fprime-freertos/library.cmake")
+
 # Add STM32 drivers first (needed by deployments)
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/STM32/STM32GpioDriver")
 

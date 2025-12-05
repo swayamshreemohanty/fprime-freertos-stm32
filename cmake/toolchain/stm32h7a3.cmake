@@ -1,5 +1,5 @@
 ####
-# STM32H743 Toolchain
+# STM32H7A3 Toolchain for Nucleo-H7A3ZI-Q Board
 ####
 
 set(CMAKE_SYSTEM_NAME "Generic")
@@ -23,7 +23,7 @@ set(COMMON_FLAGS "${CPU_FLAGS} -DUSE_HAL_DRIVER -DSTM32H7A3XXQ -Wall -fdata-sect
 set(CMAKE_C_FLAGS "${COMMON_FLAGS} -std=gnu11" CACHE STRING "" FORCE)
 
 # C++ flags
-set(CMAKE_CXX_FLAGS "${COMMON_FLAGS} -std=c++11 -fno-exceptions -fno-rtti" CACHE STRING "" FORCE)
+set(CMAKE_CXX_FLAGS "${COMMON_FLAGS} -std=c++11 -fno-exceptions -fno-rtti -include cinttypes" CACHE STRING "" FORCE)
 
 # Linker flags
 set(CMAKE_EXE_LINKER_FLAGS "${CPU_FLAGS} -specs=nano.specs -T${CMAKE_CURRENT_LIST_DIR}/../STM32H7_HAL/STM32H7A3XX_FLASH.ld -Wl,--gc-sections -Wl,-Map=output.map" CACHE STRING "" FORCE)

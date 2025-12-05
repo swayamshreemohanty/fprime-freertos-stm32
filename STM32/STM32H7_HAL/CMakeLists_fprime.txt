@@ -1,0 +1,97 @@
+####
+# STM32H7 HAL Integration for F Prime
+# This file integrates STM32CubeMX HAL code with F Prime build system
+####
+
+# Manually set STM32CubeMX paths (from cmake/stm32cubemx/CMakeLists.txt)
+set(MX_Defines_Syms 
+	USE_PWR_DIRECT_SMPS_SUPPLY 
+	USE_NUCLEO_144 
+	USE_HAL_DRIVER 
+	STM32H7A3xxQ
+)
+
+set(MX_Include_Dirs
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Inc
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Inc
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/include
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/BSP/STM32H7xx_Nucleo
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/CMSIS/Device/ST/STM32H7xx/Include
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/CMSIS/Include
+)
+
+set(MX_Application_Src
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/main.c
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/freertos.c
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/stm32h7xx_it.c
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/stm32h7xx_hal_msp.c
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/stm32h7xx_hal_timebase_tim.c
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/sysmem.c
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/syscalls.c
+    ${CMAKE_CURRENT_LIST_DIR}/startup_stm32h7a3xxq.s
+)
+
+set(STM32_Drivers_Src
+    ${CMAKE_CURRENT_LIST_DIR}/Core/Src/system_stm32h7xx.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hsem.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_exti.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c
+    ${CMAKE_CURRENT_LIST_DIR}/Drivers/BSP/STM32H7xx_Nucleo/stm32h7xx_nucleo.c
+)
+
+set(FreeRTOS_Src
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/list.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/queue.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/timers.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+    ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+)
+
+# Create a static library for STM32 HAL + FreeRTOS + Application code
+add_library(stm32h7_hal STATIC 
+    ${STM32_Drivers_Src}
+    ${FreeRTOS_Src}
+    ${MX_Application_Src}
+)
+
+# Set include directories
+target_include_directories(stm32h7_hal PUBLIC ${MX_Include_Dirs})
+
+# Set compile definitions
+target_compile_definitions(stm32h7_hal PUBLIC ${MX_Defines_Syms})
+
+# Set C standard for HAL code
+set_target_properties(stm32h7_hal PROPERTIES
+    C_STANDARD 11
+    C_STANDARD_REQUIRED ON
+    C_EXTENSIONS ON
+)
+
+
