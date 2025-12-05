@@ -1,17 +1,23 @@
 ####
-# STM32H7 HAL Library for FPrime
+# STM32H7 HAL Library for FPrime - Minimal LED Blinker Build
 ####
 
-# Collect all HAL sources
-file(GLOB HAL_SOURCES
-  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/*.c
+# Only include essential HAL sources for LED blinking
+set(HAL_SOURCES
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c
 )
 
-# Remove problematic DMA files (not needed for LED blinker)
-list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_dma.*")
-list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_dma2d.*")
-list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_bdma.*")
-list(FILTER HAL_SOURCES EXCLUDE REGEX ".*stm32h7xx_hal_mdma.*")
+# BSP (Board Support Package) for Nucleo board LEDs
+set(BSP_SOURCES
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/BSP/STM32H7xx_Nucleo/stm32h7xx_nucleo.c
+)
 
 # Collect Core sources
 file(GLOB CORE_SOURCES
@@ -26,7 +32,7 @@ set(STARTUP_SOURCE
 # Collect FreeRTOS sources
 file(GLOB FREERTOS_SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/*.c
-  ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/*.c
+  ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/*.c
   ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/*.c
 )
 
@@ -37,6 +43,7 @@ file(GLOB FREERTOS_HEAP
 # Create STM32 HAL library
 add_library(stm32h7_hal STATIC
   ${HAL_SOURCES}
+  ${BSP_SOURCES}
   ${CORE_SOURCES}
   ${STARTUP_SOURCE}
   ${FREERTOS_SOURCES}
@@ -50,15 +57,16 @@ target_include_directories(stm32h7_hal PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy
   ${CMAKE_CURRENT_LIST_DIR}/Drivers/CMSIS/Device/ST/STM32H7xx/Include
   ${CMAKE_CURRENT_LIST_DIR}/Drivers/CMSIS/Include
+  ${CMAKE_CURRENT_LIST_DIR}/Drivers/BSP/STM32H7xx_Nucleo
   ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/include
   ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
-  ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1
+  ${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
 )
 
 # Compiler definitions
 target_compile_definitions(stm32h7_hal PUBLIC
   USE_HAL_DRIVER
-  STM32H7A3XXQ
+  STM32H7A3xxQ  # Correct chip define with lowercase xx
 )
 
 # Compiler options - ensure C99 standard for proper type definitions

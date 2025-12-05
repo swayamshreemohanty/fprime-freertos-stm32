@@ -41,6 +41,9 @@
  extern "C" {
 #endif /* __cplusplus */
 
+/* Ensure standard integer types are available */
+#include <stdint.h>
+
 /** @addtogroup Library_configuration_section
   * @{
   */
