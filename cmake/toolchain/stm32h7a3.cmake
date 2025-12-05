@@ -26,7 +26,7 @@ set(CMAKE_C_FLAGS "${COMMON_FLAGS} -std=gnu11" CACHE STRING "" FORCE)
 set(CMAKE_CXX_FLAGS "${COMMON_FLAGS} -std=c++11 -fno-exceptions -fno-rtti -D__int64_t_defined -include inttypes.h" CACHE STRING "" FORCE)
 
 # Linker flags
-set(CMAKE_EXE_LINKER_FLAGS "${CPU_FLAGS} -specs=nano.specs -T${CMAKE_CURRENT_LIST_DIR}/../../STM32/STM32H7_HAL/STM32H7A3XX_FLASH.ld -Wl,--gc-sections -Wl,-Map=output.map" CACHE STRING "" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS "${CPU_FLAGS} -specs=nano.specs -specs=nosys.specs -T${CMAKE_CURRENT_LIST_DIR}/../../STM32/STM32H7_HAL/STM32H7A3XX_FLASH.ld -Wl,--gc-sections -Wl,-Map=output.map" CACHE STRING "" FORCE)
 
 # Tell CMake not to try to link during the test compilation
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)

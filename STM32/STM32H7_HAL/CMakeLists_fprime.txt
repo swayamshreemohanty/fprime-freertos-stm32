@@ -94,4 +94,7 @@ set_target_properties(stm32h7_hal PROPERTIES
     C_EXTENSIONS ON
 )
 
+# Ensure all functions are compiled as Thumb code
+target_compile_options(stm32h7_hal PRIVATE -mthumb)
+
 
