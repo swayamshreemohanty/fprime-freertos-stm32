@@ -17,14 +17,30 @@ module HeaterBoard {
         # ----------------------------------------------------------------------
 
         @ Blink interval in rate group ticks
-        param BLINK_INTERVAL: U32 default 10
+        param BLINK_INTERVAL: U32 default 2
+
+        # ----------------------------------------------------------------------
+        # Commands
+        # ----------------------------------------------------------------------
+
+        @ Start or stop LED blinking
+        async command BLINKING_ON_OFF(
+            on_off: Fw.On @< Indicates whether to start or stop blinking
+        )
 
         # ----------------------------------------------------------------------
         # Events
         # ----------------------------------------------------------------------
 
+        @ LED blinking state changed
+        event BLINKING_STATE_CHANGE(blinkState: Fw.On) \
+          severity activity high \
+          format "LED blinking state set to {}"
+
         @ LED state changed
-        event LED_STATE($state: Fw.On) severity activity low format "LED state changed to {}"
+        event LED_STATE(ledState: Fw.On) \
+          severity activity low \
+          format "LED state changed to {}"
 
         # ----------------------------------------------------------------------
         # Telemetry

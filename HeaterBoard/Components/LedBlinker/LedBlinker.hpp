@@ -36,6 +36,13 @@ class LedBlinker final : public LedBlinkerComponentBase {
         U32 context                 //!< The call order
     ) override;
 
+    //! Handler for command BLINKING_ON_OFF
+    void BLINKING_ON_OFF_cmdHandler(
+        FwOpcodeType opCode,        //!< The opcode
+        U32 cmdSeq,                 //!< The command sequence number
+        Fw::On on_off               //!< Blinking state
+    ) override;
+
     // ----------------------------------------------------------------------
     // Member variables
     // ----------------------------------------------------------------------
@@ -43,6 +50,7 @@ class LedBlinker final : public LedBlinkerComponentBase {
     U32 m_blinkCount;   //!< Number of blinks
     bool m_ledState;    //!< Current LED state
     U32 m_cycleCount;   //!< Cycle counter for blink interval
+    bool m_blinking;    //!< Is blinking enabled
 };
 
 }  // namespace HeaterBoard
